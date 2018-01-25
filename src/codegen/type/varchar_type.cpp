@@ -233,7 +233,6 @@ struct Lower : public TypeSystem::UnaryOperatorHandleNull {
   }
 };
 
-
 ////////////////////////////////////////////////////////////////////////////////
 ///
 /// Binary operators
@@ -482,8 +481,7 @@ struct Concat : public TypeSystem::NaryOperator,
     // Make room on stack to store each of the input strings and their lengths
     auto num_inputs = static_cast<uint32_t>(input_args.size());
     auto *concat_str_buffer =
-        codegen.AllocateBuffer(codegen.CharPtrType(), num_inputs,
-        "concatStrs");
+        codegen.AllocateBuffer(codegen.CharPtrType(), num_inputs, "concatStrs");
     auto *concat_str_lens_buffer = codegen.AllocateBuffer(
         codegen.Int32Type(), num_inputs, "concatStrLens");
 
@@ -545,11 +543,8 @@ struct Substr : public TypeSystem::NaryOperator {
     // Setup function arguments
     llvm::Value *executor_ctx = ctx.executor_context;
     std::vector<llvm::Value *> args = {
-        executor_ctx,
-        input_args[0].GetValue(),
-        input_args[0].GetLength(),
-        input_args[1].GetValue(),
-        input_args[2].GetValue(),
+        executor_ctx, input_args[0].GetValue(), input_args[0].GetLength(),
+        input_args[1].GetValue(), input_args[2].GetValue(),
     };
 
     // Call
@@ -602,10 +597,14 @@ RTrim kRTrim;
 Repeat kRepeat;
 Concat kConcat;
 std::vector<TypeSystem::BinaryOpInfo> kBinaryOperatorTable = {
-    {OperatorId::Like, kLike},         {OperatorId::DateTrunc, kDateTrunc},
-    {OperatorId::DatePart, kDatePart}, {OperatorId::BTrim, kBTrim},
-    {OperatorId::LTrim, kLTrim},       {OperatorId::RTrim, kRTrim},
-    {OperatorId::Repeat, kRepeat},     {OperatorId::Concat, kConcat}};
+    {OperatorId::Like, kLike},
+    {OperatorId::DateTrunc, kDateTrunc},
+    {OperatorId::DatePart, kDatePart},
+    {OperatorId::BTrim, kBTrim},
+    {OperatorId::LTrim, kLTrim},
+    {OperatorId::RTrim, kRTrim},
+    {OperatorId::Repeat, kRepeat},
+    {OperatorId::Concat, kConcat}};
 
 // Nary operations
 Substr kSubstr;

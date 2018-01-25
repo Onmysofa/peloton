@@ -92,7 +92,7 @@ bool StringFunctions::Like(UNUSED_ATTRIBUTE executor::ExecutorContext &ctx,
 
 #undef NextByte
 
-char* StringFunctions::Upper(executor::ExecutorContext &ctx, const char *str,
+char *StringFunctions::Upper(executor::ExecutorContext &ctx, const char *str,
                              uint32_t str_length) {
   auto *pool = ctx.GetPool();
   auto *new_str = reinterpret_cast<char *>(pool->Allocate(str_length));
@@ -106,7 +106,7 @@ char* StringFunctions::Upper(executor::ExecutorContext &ctx, const char *str,
   return new_str;
 }
 
-char* StringFunctions::Lower(executor::ExecutorContext &ctx, const char *str,
+char *StringFunctions::Lower(executor::ExecutorContext &ctx, const char *str,
                              uint32_t str_length) {
   auto *pool = ctx.GetPool();
   auto *new_str = reinterpret_cast<char *>(pool->Allocate(str_length));
@@ -120,10 +120,9 @@ char* StringFunctions::Lower(executor::ExecutorContext &ctx, const char *str,
   return new_str;
 }
 
-StringFunctions::StrWithLen StringFunctions::Concat(executor::ExecutorContext &ctx,
-                                   const char **concat_strs,
-                                   uint32_t *str_length,
-                                   uint32_t array_length) {
+StringFunctions::StrWithLen StringFunctions::Concat(
+    executor::ExecutorContext &ctx, const char **concat_strs,
+    const uint32_t *str_length, uint32_t array_length) {
   uint32_t total_len = 1;
 
   for (uint32_t i = 0; i < array_length; i++) {
@@ -137,7 +136,6 @@ StringFunctions::StrWithLen StringFunctions::Concat(executor::ExecutorContext &c
   // Perform concat
   char *ptr = new_str;
   for (uint32_t i = 0; i < array_length; i++) {
-
     if (concat_strs[i] == nullptr) {
       continue;
     }

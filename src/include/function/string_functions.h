@@ -42,17 +42,17 @@ class StringFunctions {
                    const char *p, uint32_t plen);
 
   // Upper
-  static char* Upper(executor::ExecutorContext &ctx, const char *str,
+  static char *Upper(executor::ExecutorContext &ctx, const char *str,
                      uint32_t str_length);
 
   // Lower
-  static char* Lower(executor::ExecutorContext &ctx, const char *str,
+  static char *Lower(executor::ExecutorContext &ctx, const char *str,
                      uint32_t str_length);
 
   // Concat
   static StringFunctions::StrWithLen Concat(executor::ExecutorContext &ctx,
                                             const char **concat_strs,
-                                            uint32_t *str_length,
+                                            const uint32_t *str_length,
                                             uint32_t array_length);
 
   // Substring
