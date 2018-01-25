@@ -360,6 +360,15 @@ TEST_F(StringFunctionsTests, ConcatTest) {
 
   auto res = function::OldEngineStringFunctions::Concat(args);
   EXPECT_EQ(res.ToString(), "12345677654321");
+
+  args = {
+      type::ValueFactory::GetVarcharValue(nullptr),
+      type::ValueFactory::GetVarcharValue(nullptr)
+  };
+
+  res = function::OldEngineStringFunctions::Concat(args);
+
+  EXPECT_EQ(res.ToString(), "");
 }
 
 TEST_F(StringFunctionsTests, UpperLowerTest) {

@@ -123,11 +123,22 @@ char *StringFunctions::Lower(executor::ExecutorContext &ctx, const char *str,
 StringFunctions::StrWithLen StringFunctions::Concat(
     executor::ExecutorContext &ctx, const char **concat_strs,
     const uint32_t *str_length, uint32_t array_length) {
-  uint32_t total_len = 1;
+  uint32_t total_len = 0;
+  bool is_null = true;
 
   for (uint32_t i = 0; i < array_length; i++) {
+    if (str_length[i] == 0) {
+      continue;
+    }
     total_len += str_length[i] - 1;
+    is_null = false;
   }
+
+  if (is_null) {
+    return StringFunctions::StrWithLen{nullptr, 0};
+  }
+
+  total_len++;
 
   // Allocate new memory
   auto *pool = ctx.GetPool();
@@ -136,7 +147,7 @@ StringFunctions::StrWithLen StringFunctions::Concat(
   // Perform concat
   char *ptr = new_str;
   for (uint32_t i = 0; i < array_length; i++) {
-    if (concat_strs[i] == nullptr) {
+    if (str_length[i] == 0) {
       continue;
     }
 
