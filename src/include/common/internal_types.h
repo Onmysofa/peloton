@@ -1055,6 +1055,8 @@ enum class OperatorId : uint32_t {
   LogicalAnd,
   LogicalOr,
   Ascii,
+  Upper,
+  Lower,
   Chr,
   Concat,
   Substr,

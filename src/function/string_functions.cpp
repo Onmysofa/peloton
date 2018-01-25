@@ -94,22 +94,60 @@ bool StringFunctions::Like(UNUSED_ATTRIBUTE executor::ExecutorContext &ctx,
 
 char* StringFunctions::Upper(executor::ExecutorContext &ctx, const char *str,
                              uint32_t str_length) {
-  return nullptr;
-  // TODO
+  auto *pool = ctx.GetPool();
+  auto *new_str = reinterpret_cast<char *>(pool->Allocate(str_length));
+
+  PL_MEMCPY(new_str, str, str_length);
+
+  for (uint32_t i = 0; i < str_length; i++) {
+    new_str[i] = toupper(new_str[i]);
+  }
+
+  return new_str;
 }
 
 char* StringFunctions::Lower(executor::ExecutorContext &ctx, const char *str,
                              uint32_t str_length) {
-  return nullptr;
-  // TODO
+  auto *pool = ctx.GetPool();
+  auto *new_str = reinterpret_cast<char *>(pool->Allocate(str_length));
+
+  PL_MEMCPY(new_str, str, str_length);
+
+  for (uint32_t i = 0; i < str_length; i++) {
+    new_str[i] = tolower(new_str[i]);
+  }
+
+  return new_str;
 }
 
 StringFunctions::StrWithLen StringFunctions::Concat(executor::ExecutorContext &ctx,
                                    const char **concat_strs,
                                    uint32_t *str_length,
                                    uint32_t array_length) {
-  return nullptr;
-  // TODO
+  uint32_t total_len = 1;
+
+  for (uint32_t i = 0; i < array_length; i++) {
+    total_len += str_length[i] - 1;
+  }
+
+  // Allocate new memory
+  auto *pool = ctx.GetPool();
+  auto *new_str = reinterpret_cast<char *>(pool->Allocate(total_len));
+
+  // Perform concat
+  char *ptr = new_str;
+  for (uint32_t i = 0; i < array_length; i++) {
+
+    if (concat_strs[i] == nullptr) {
+      continue;
+    }
+
+    PL_MEMCPY(ptr, concat_strs[i], str_length[i] - 1);
+    ptr += (str_length[i] - 1);
+  }
+
+  // We done
+  return StringFunctions::StrWithLen{new_str, total_len};
 }
 
 StringFunctions::StrWithLen StringFunctions::Substr(
