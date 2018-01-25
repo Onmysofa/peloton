@@ -349,5 +349,38 @@ TEST_F(StringFunctionsTests, CodegenSubstrTest) {
   EXPECT_EQ(nullptr, res.str);
 }
 
+TEST_F(StringFunctionsTests, ConcatTest) {
+  const std::string message1 = "1234567";
+  const std::string message2 = "7654321";
+
+    std::vector<type::Value> args = {
+        type::ValueFactory::GetVarcharValue(message1),
+        type::ValueFactory::GetVarcharValue(message2)
+    };
+
+  auto res = function::OldEngineStringFunctions::Concat(args);
+  EXPECT_EQ(res.ToString(), "12345677654321");
+}
+
+TEST_F(StringFunctionsTests, UpperLowerTest) {
+  const std::string message = "abcde";
+
+  std::vector<type::Value> args = {
+      type::ValueFactory::GetVarcharValue(message)
+  };
+
+  auto res = function::OldEngineStringFunctions::Upper(args);
+  EXPECT_EQ(res.ToString(), "ABCDE");
+
+    const std::string message2 = "ABCDE";
+
+  args = {
+      type::ValueFactory::GetVarcharValue(message2)
+  };
+
+  res = function::OldEngineStringFunctions::Lower(args);
+  EXPECT_EQ(res.ToString(), "abcde");
+}
+
 }  // namespace test
 }  // namespace peloton
