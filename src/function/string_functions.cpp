@@ -92,6 +92,26 @@ bool StringFunctions::Like(UNUSED_ATTRIBUTE executor::ExecutorContext &ctx,
 
 #undef NextByte
 
+char* StringFunctions::Upper(executor::ExecutorContext &ctx, const char *str,
+                             uint32_t str_length) {
+  return nullptr;
+  // TODO
+}
+
+char* StringFunctions::Lower(executor::ExecutorContext &ctx, const char *str,
+                             uint32_t str_length) {
+  return nullptr;
+  // TODO
+}
+
+StringFunctions::StrWithLen StringFunctions::Concat(executor::ExecutorContext &ctx,
+                                   const char **concat_strs,
+                                   uint32_t *str_length,
+                                   uint32_t array_length) {
+  return nullptr;
+  // TODO
+}
+
 StringFunctions::StrWithLen StringFunctions::Substr(
     UNUSED_ATTRIBUTE executor::ExecutorContext &ctx, const char *str,
     uint32_t str_length, int32_t from, int32_t len) {
